@@ -1,0 +1,94 @@
+===================================
+scene with a line of dialogue
+===================================
+
+::main
+You there.
+;;
+
+---
+
+(source_file
+  (scene
+    (scene_header
+      name: (scene_name))
+    (beat
+      (text)
+      (beat_break))))
+
+===================================
+instant string and an inline lish block
+===================================
+
+::main
+#"Stranger:"
+I just need{ delay medium } directions.
+;;
+
+---
+
+(source_file
+  (scene
+    (scene_header
+      name: (scene_name))
+    (beat
+      (instant_string
+        (double_string))
+      (text)
+      (block
+        (block_body))
+      (text)
+      (beat_break))))
+
+===================================
+char and defer sigils, and lone sigils as text
+===================================
+
+::main
+@"Narrator"
+%{ end }
+plain 100% text #notasigil
+;;
+
+---
+
+(source_file
+  (scene
+    (scene_header
+      name: (scene_name))
+    (beat
+      (char_string
+        (double_string))
+      (defer_block
+        (block_body))
+      (text)
+      (beat_break))))
+
+===================================
+comment and two scenes
+===================================
+
+// intro
+::a
+hi
+;;
+::b
+bye
+;;
+
+---
+
+(source_file
+  (comment)
+  (scene
+    (scene_header
+      name: (scene_name))
+    (beat
+      (text)
+      (beat_break)))
+  (scene
+    (scene_header
+      name: (scene_name))
+    (beat
+      (text)
+      (beat_break))))

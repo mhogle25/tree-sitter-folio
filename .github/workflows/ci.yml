@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: tree-sitter-folio
+    runs-on: ubuntu-latest
+    steps:
+      # The grammar vendors generated constants from folio via scripts/sync.js,
+      # which runs `zig build gen` in a local source. folio in turn pins lish at
+      # `../lish`, so check both out as siblings and point FOLIO_SOURCE at folio.
+      - name: Checkout tree-sitter-folio
+        uses: actions/checkout@v4
+        with:
+          path: tree-sitter-folio
+      - name: Checkout folio
+        uses: actions/checkout@v4
+        with:
+          repository: mhogle25/folio
+          path: folio
+      - name: Checkout lish
+        uses: actions/checkout@v4
+        with:
+          repository: mhogle25/lish
+          path: lish
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.16.0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: install, generate, test
+        working-directory: tree-sitter-folio
+        env:
+          FOLIO_SOURCE: ${{ github.workspace }}/folio
+        run: |
+          pnpm install
+          pnpm run generate
+          pnpm test
+      # The vendored common/ constants must match what sync produces from folio's
+      # token.zig; fail if they drift.
+      - name: vendored constants up to date
+        working-directory: tree-sitter-folio
+        env:
+          FOLIO_SOURCE: ${{ github.workspace }}/folio
+        run: |
+          node scripts/sync.js
+          git diff --exit-code common/

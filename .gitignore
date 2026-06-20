@@ -1,0 +1,49 @@
+# Modeled on tree-sitter-lish (and tree-sitter-typescript/rust). The generated
+# src/parser.c, src/grammar.json, and src/node-types.json ARE committed so
+# editor users can build the parser without installing tree-sitter-cli.
+# Hand-written sources (scanner.c, grammar.js, queries/*) and the vendored
+# common/* are tracked too.
+
+# Node artifacts
+build/
+prebuilds/
+node_modules/
+
+# Rust artifacts (future Rust bindings)
+target/
+
+# Swift artifacts (future Swift bindings)
+.build/
+
+# Go artifacts (future Go bindings)
+_obj/
+
+# Python artifacts (future Python bindings)
+.venv/
+dist/
+*.egg-info
+*.whl
+
+# C artifacts (compiled parser binaries land here on local dev)
+*.a
+*.so
+*.so.*
+*.dylib
+*.dll
+*.pc
+*.o
+
+# Tree-sitter CLI local cache
+.tree-sitter/
+
+# IDE / editor scratch
+.vscode/
+.idea/
+*.swp
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
