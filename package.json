@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "folio grammar for tree-sitter (dialogue/scripting layer over lish)",
   "license": "MIT",
-  "main": "bindings/node",
   "files": [
     "grammar.js",
     "queries/*.scm",
@@ -16,7 +15,7 @@
     "pregenerate": "node scripts/sync.js",
     "postinstall": "node scripts/sync.js --soft",
     "generate": "tree-sitter generate",
-    "test": "tree-sitter test"
+    "test": "tree-sitter test && node test/scanner-corpus.test.js"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.24.0"

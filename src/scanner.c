@@ -168,6 +168,7 @@ static bool scan_block_body(TSLexer *lexer) {
             if (!lexer->eof(lexer) && lexer->lookahead == LISH_COMMENT) {
                 lexer->advance(lexer, false);
                 skip_lish_comment(lexer);
+                lexer->mark_end(lexer);  // the comment is part of the lish content
                 consumed = true;
                 continue;
             }
